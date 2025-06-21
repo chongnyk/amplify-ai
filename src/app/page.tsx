@@ -3,7 +3,8 @@ import { Authenticator } from "@aws-amplify/ui-react";
 import { AIConversation } from '@aws-amplify/ui-react-ai';
 import { useAIConversation } from "../client";
 
-export default function Page() {
+// Create a separate component for the chat that runs inside the authenticated context
+function ChatComponent() {
   const [
     {
       data: { messages },
@@ -11,15 +12,20 @@ export default function Page() {
     },
     handleSendMessage,
   ] = useAIConversation('chat');
-  // 'chat' is based on the key for the conversation route in your schema.
 
   return (
+    <AIConversation
+      messages={messages}
+      isLoading={isLoading}
+      handleSendMessage={handleSendMessage}
+    />
+  );
+}
+
+export default function Page() {
+  return (
     <Authenticator>
-      <AIConversation
-        messages={messages}
-        isLoading={isLoading}
-        handleSendMessage={handleSendMessage}
-      />
+      <ChatComponent />
     </Authenticator>
   );
 }

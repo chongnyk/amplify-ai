@@ -108,7 +108,7 @@ function ChatComponent() {
       {/* Header */}
       <div className="bg-white border-b border-gray-200 px-4 py-3">
         <div className="flex justify-between items-center">
-          <h1 className="text-xl font-semibold text-gray-800">AI Cooking Assistant</h1>
+          <h1 className="text-xl font-semibold text-gray-800">AI Japanese Tutor</h1>
           {messages.length > 0 && (
             <button
               onClick={() => setShowQuickActions(!showQuickActions)}

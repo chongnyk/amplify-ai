@@ -175,7 +175,7 @@ function ChatComponent() {
                   Welcome to AI Cooking Assistant!
                 </h2>
                 <p className="text-gray-600 mb-6">
-                  I'm here to help you with recipes, cooking tips, meal planning, and more. 
+                  I&apos;m here to help you with recipes, cooking tips, meal planning, and more. 
                   Get started by clicking a quick action or typing your own message.
                 </p>
                 {/* Mobile Quick Actions */}
@@ -214,6 +214,7 @@ function ChatComponent() {
             onClick={() => setShowQuickActions(true)}
             className="bg-blue-500 hover:bg-blue-600 text-white p-3 rounded-full shadow-lg transition-colors"
           >
+            ⚡
           </button>
         </div>
       )}

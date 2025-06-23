@@ -7,52 +7,52 @@ import { useState } from 'react';
 // Quick chat options configuration
 const quickChatOptions = [
   {
-    id: 'greeting',
-    label: 'Get Started',
-    message: 'Hello! How can you help me today?',
+    id: '統合',
+    label: '統合',
+    message: 'Can you generate some example sentences using the word 統合 and explain these sentences?',
     icon: '👋',
     category: 'general',
-    description: 'Start a conversation'
+    description: 'Example Sentences'
   },
   {
-    id: 'recipe-quick',
-    label: 'Quick Recipe',
-    message: 'Can you suggest a quick and easy recipe for dinner tonight?',
+    id: '背景',
+    label: '背景',
+    message: 'Can you generate some example sentences using the word 背景 and explain these sentences?',
     icon: '🍳',
-    category: 'recipes',
-    description: 'Get a fast recipe idea'
+    category: 'general',
+    description: 'Example Sentences'
   },
   {
-    id: 'healthy-meal',
-    label: 'Healthy Meal',
-    message: 'I want to cook something healthy. What do you recommend?',
+    id: '環境',
+    label: '環境',
+    message: 'Can you generate a short reading comprehension exercise using the word 環境?',
     icon: '🥗',
-    category: 'recipes',
-    description: 'Healthy meal suggestions'
+    category: 'general',
+    description: 'Reading Comprehension'
   },
   {
-    id: 'cooking-tips',
-    label: 'Cooking Tips',
-    message: 'What are some essential cooking tips for beginners?',
+    id: 'なるべく',
+    label: 'なるべく',
+    message: 'Can you generate a multiple choice exercise for the user to select the correct usage of なるべく?',
     icon: '💡',
-    category: 'tips',
-    description: 'Learn cooking basics'
+    category: 'grammar',
+    description: 'Grammar Exercise'
   },
   {
-    id: 'ingredient-help',
-    label: 'Use My Ingredients',
-    message: 'I have some ingredients at home. Can you help me figure out what to cook?',
+    id: 'ように',
+    label: 'ように',
+    message: 'Can you generate a multiple choice exercise for the user to select the correct usage of ように`?',
     icon: '🥘',
-    category: 'ingredients',
-    description: 'Recipe from your ingredients'
+    category: 'grammar',
+    description: 'Grammar Exercise'
   },
   {
-    id: 'meal-plan',
-    label: 'Meal Planning',
-    message: 'Can you help me plan meals for this week?',
+    id: 'N3',
+    label: 'N3',
+    message: 'Can you generate a reading comprehension exercise for N3-level Japanese students?',
     icon: '📅',
-    category: 'planning',
-    description: 'Weekly meal planning'
+    category: 'general',
+    description: 'Reading Comprehension'
   }
 ];
 

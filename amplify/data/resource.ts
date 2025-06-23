@@ -17,7 +17,7 @@ const schema = a.schema({
     aiModel: {
       resourcePath: crossRegionModel,
     },
-    systemPrompt: 'You are a helpful assistant',
+    systemPrompt: 'You are a Japanese language teacher',
     handler: conversationHandler,
   })
   .authorization((allow) => allow.owner()),

@@ -78,7 +78,7 @@ function FeatureCard({ feature }: { feature: typeof features[0] }) {
 }
 
 function HomePage() {
-  const [user, setUser] = useState(null);
+  const [user, _setUser] = useState(null);
   console.log('Current user:', user);
 
   return (

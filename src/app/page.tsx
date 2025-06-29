@@ -78,8 +78,8 @@ function FeatureCard({ feature }: { feature: typeof features[0] }) {
 }
 
 function HomePage() {
-  const [user, _setUser] = useState(null);
-  console.log('Current user:', user);
+  // const [user, _setUser] = useState(null);
+  // console.log('Current user:', user);
 
   return (
     <div className="min-h-screen bg-gray-50">

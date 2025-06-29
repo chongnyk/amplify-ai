@@ -2,7 +2,7 @@
 'use client'
 import { Authenticator } from "@aws-amplify/ui-react";
 import Link from 'next/link';
-import { useState } from 'react';
+//import { useState } from 'react';
 
 // Feature cards data
 const features = [

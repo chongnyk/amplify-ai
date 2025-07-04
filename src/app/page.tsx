@@ -2,6 +2,7 @@
 'use client'
 import { Authenticator } from "@aws-amplify/ui-react";
 import Link from 'next/link';
+import { ThemeToggle } from "@/components/theme/themeToggle";
 //import { useState } from 'react';
 
 // Feature cards data
@@ -91,20 +92,23 @@ function HomePage() {
               <span className="text-2xl">🎌</span>
               <h1 className="text-xl font-bold text-gray-800">Japanese Learning Hub</h1>
             </div>
-            <nav className="hidden md:flex items-center space-x-6">
-              <Link href="/chat" className="text-gray-600 hover:text-blue-600 transition-colors">
-                Chat Tutor
-              </Link>
-              <Link href="/vocabulary" className="text-gray-600 hover:text-blue-600 transition-colors">
-                Vocabulary
-              </Link>
-              <Link href="/grammar" className="text-gray-600 hover:text-blue-600 transition-colors">
-                Grammar
-              </Link>
-              <Link href="/reading" className="text-gray-600 hover:text-blue-600 transition-colors">
-                Reading
-              </Link>
-            </nav>
+            <div className="flex items-center space-x-6">
+              <nav className="hidden md:flex items-center space-x-6">
+                <Link href="/chat" className="text-gray-600 hover:text-blue-600 transition-colors">
+                  Chat Tutor
+                </Link>
+                <Link href="/vocabulary" className="text-gray-600 hover:text-blue-600 transition-colors">
+                  Vocabulary
+                </Link>
+                <Link href="/grammar" className="text-gray-600 hover:text-blue-600 transition-colors">
+                  Grammar
+                </Link>
+                <Link href="/reading" className="text-gray-600 hover:text-blue-600 transition-colors">
+                  Reading
+                </Link>
+              </nav>
+              <ThemeToggle />
+            </div>
           </div>
         </div>
       </header>

@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import { Flashcard } from "./flashcard"
 import type { Flashcard as FlashcardType } from "../../lib/flashcards"
+import "@/app/globals.css"
 
 interface FlashcardCarouselProps {
   flashcards: FlashcardType[]
@@ -49,7 +50,7 @@ export function FlashcardCarousel({ flashcards, currentIndex, onIndexChange }: F
             style={{
               transform: `translateX(${offset * 100}%) scale(${offset === 0 ? 1 : 0.85})`,
               zIndex: offset === 0 ? 10 : 5 - Math.abs(offset),
-              opacity: Math.abs(offset) > 1 ? 0 : offset === 0 ? 1 : 0.6,
+              opacity: offset === 0 ? 1 : 0.4,
             }}
             onClick={() => {
               if (offset !== 0) {
@@ -57,7 +58,7 @@ export function FlashcardCarousel({ flashcards, currentIndex, onIndexChange }: F
               }
             }}
           >
-            <div className={`w-80 ${offset !== 0 ? "cursor-pointer" : ""}`}>
+            <div className={`w-96 ${offset !== 0 ? "cursor-pointer" : ""} ${offset !== 0 ? "filter blur-sm" : ""}`}>
               <Flashcard flashcard={card} />
             </div>
           </div>

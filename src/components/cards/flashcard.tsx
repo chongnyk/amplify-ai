@@ -19,9 +19,12 @@ export function Flashcard({ flashcard, isActive = true }: FlashcardProps) {
   return (
     <div className="w-[450px] h-[300px] mx-auto">
       <div
-        className={`w-full h-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg shadow-lg ${
+        className={`w-full h-full border border-gray-200 dark:border-gray-600 rounded-lg shadow-lg ${
           isActive ? "cursor-pointer hover:shadow-xl" : "cursor-default"
         } transition-shadow`}
+        style={{
+          background: "linear-gradient(to bottom right, #581c87, #7c3aed)"
+        }}
         onClick={() => isActive && setIsFlipped(!isFlipped)}
       >
         {!isFlipped ? (

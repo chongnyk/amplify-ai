@@ -45,7 +45,7 @@ export function FlashcardCarousel({ flashcards, currentIndex, onIndexChange }: F
       <div className="flex items-center justify-center min-h-[300px] px-4">
         {visibleCards.map(({ card, offset, index }) => (
           <div
-            key={`${card.id}-${index}`}
+            key={`${card.id}-${index}-${offset}`}
             className={`absolute transition-all duration-300 ease-out ${isTransitioning ? "transition-transform" : ""}`}
             style={{
               transform: `translateX(${offset * 100}%) scale(${offset === 0 ? 1 : 0.85})`,

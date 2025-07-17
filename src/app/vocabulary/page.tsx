@@ -1,133 +1,143 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Authenticator } from "@aws-amplify/ui-react";
+import { client } from "@/client";
 import Link from 'next/link';
-import { ChevronLeft, ChevronRight, RotateCcw, Shuffle } from "lucide-react"
+import { ChevronRight, Plus } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { ThemeToggle } from "@/components/theme/themeToggle"
-import { FlashcardCarousel } from "@/components/cards/flashcardCarousel"
-import { ProgressBar } from "@/components/cards/progressBar"
-import { flashcards } from "@/lib/flashcards"
-import { useKeyboardNavigation } from "@/hooks/useKeyboardNav"
-import { useSwipe } from "@/hooks/useSwipe"
+// Amplify should be configured in client.ts - removing duplicate config
 
 function VocabularyPage() {
-  const [currentIndex, setCurrentIndex] = useState(0)
-  const [cards, setCards] = useState(flashcards)
+  const [decks, setDecks] = useState<any[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
-  const nextCard = () => {
-    setCurrentIndex((prev) => (prev + 1) % cards.length)
+  useEffect(() => {
+    const loadDecks = async () => {
+      try {
+        console.log('Client:', client) // Debug log
+        console.log('Client models:', client.models) // Debug log
+        console.log('Available models:', Object.keys(client.models || {})) // Debug log
+        console.log('Deck model:', client.models?.Deck) // Debug log
+        
+        const { data: decksData } = await client.models.Deck.list()
+        console.log('Decks data:', decksData) // Debug log
+        setDecks(decksData || [])
+      } catch (error) {
+        console.error('Full error details:', error)
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error'
+        setError(`Failed to load decks: ${errorMessage}`)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    loadDecks()
+  }, [])
+
+  // Loading state
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br flex items-center justify-center" style={{
+        background: "#1F2937",
+      }}>
+        <div className="text-white text-xl">Loading decks...</div>
+      </div>
+    )
   }
 
-  const prevCard = () => {
-    setCurrentIndex((prev) => (prev - 1 + cards.length) % cards.length)
+  // Error state
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br flex items-center justify-center" style={{
+        background: "#1F2937",
+      }}>
+        <div className="text-center text-white">
+          <h2 className="text-2xl font-bold mb-4">Error</h2>
+          <p className="text-xl mb-4">{error}</p>
+          <Button onClick={() => window.location.reload()}>
+            Try Again
+          </Button>
+        </div>
+      </div>
+    )
   }
-
-  const shuffleCards = () => {
-    const shuffled = [...cards].sort(() => Math.random() - 0.5)
-    setCards(shuffled)
-    setCurrentIndex(0)
-  }
-
-  const resetCards = () => {
-    setCards(flashcards)
-    setCurrentIndex(0)
-  }
-
-  // Keyboard navigation
-  useKeyboardNavigation({
-    onNext: nextCard,
-    onPrev: prevCard,
-  })
-
-  // Touch/swipe navigation
-  useSwipe({
-    onSwipeLeft: nextCard,
-    onSwipeRight: prevCard,
-  })
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#1e40af] to-[#60a5fa] dark:from-[#581c87] dark:to-[#7c3aed]">
-      {/* <div className="min-h-screen bg-gray-50">
-        <div className="bg-white border-b border-gray-200 px-4 py-3">
-          <div className="flex items-center space-x-4">
-            <Link 
-              href="/" 
-              className="text-blue-600 hover:text-blue-700 transition-colors"
-            >
-              ← Back to Home
-            </Link>
-            <h1 className="text-xl font-semibold text-gray-800">Reading Practice</h1>
-          </div>
-        </div>
-        
-        <div className="max-w-4xl mx-auto p-8">
-          <div className="text-center">
-            <span className="text-6xl mb-4 block">📖</span>
-            <h2 className="text-3xl font-bold text-gray-800 mb-4">Reading Practice</h2>
-            <p className="text-gray-600 mb-8">
-              This feature is coming soon! It will include graded texts and comprehension exercises.
-            </p>
-            <Link 
-              href="/chat"
-              className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg transition-colors"
-            >
-              Try the AI Tutor Instead
-            </Link>
-          </div>
-        </div>
-      </div> */}
-
+    <div className="min-h-screen bg-gradient-to-br" style={{
+      background: "#1F2937",
+    }}>
       <div className="absolute top-4 right-4">
         <ThemeToggle />
       </div>
 
+      <div className="absolute top-4 left-4">
+        <Link href="/">
+          <Button variant="outline" className="gap-2">
+            ← Back to Home
+          </Button>
+        </Link>
+      </div>
+
       <div className="container mx-auto px-4 py-8">
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-2">Flashcards</h1>
-          <p className="text-gray-600 dark:text-gray-300">Test your knowledge with interactive flashcards</p>
+        <div className="text-center mb-12">
+          <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-2">Vocabulary Decks</h1>
+          <p className="text-gray-600 dark:text-gray-300">Choose a deck to start studying</p>
         </div>
 
-        <ProgressBar current={currentIndex + 1} total={cards.length} />
-
-        <div className="mb-8">
-          <FlashcardCarousel flashcards={cards} currentIndex={currentIndex} onIndexChange={setCurrentIndex} />
-        </div>
-
-        {/* Navigation Controls */}
-        <div className="flex justify-center items-center gap-4 mb-6">
-          <Button variant="outline" size="icon" onClick={prevCard} disabled={cards.length <= 1}>
-            <ChevronLeft className="h-4 w-4" />
-          </Button>
-
-          <span className="text-sm text-muted-foreground min-w-[100px] text-center">
-            {currentIndex + 1} of {cards.length}
-          </span>
-
-          <Button variant="outline" size="icon" onClick={nextCard} disabled={cards.length <= 1}>
-            <ChevronRight className="h-4 w-4" />
-          </Button>
-        </div>
-
-        {/* Action Buttons */}
-        <div className="flex justify-center gap-3">
-          <Button variant="outline" onClick={shuffleCards} className="gap-2 bg-transparent">
-            <Shuffle className="h-4 w-4" />
-            Shuffle
-          </Button>
-          <Button variant="outline" onClick={resetCards} className="gap-2 bg-transparent">
-            <RotateCcw className="h-4 w-4" />
-            Reset
-          </Button>
-        </div>
-
-        {/* Instructions */}
-        <div className="text-center mt-8 text-sm text-muted-foreground space-y-1">
-          <p>Click on the center flashcard to flip it and reveal the answer</p>
-          <p>Swipe left/right or use arrow keys to navigate between cards</p>
-          <p>Click on side cards or indicators to jump to specific cards</p>
-        </div>
+        {decks.length === 0 ? (
+          <div className="text-center text-white">
+            <h2 className="text-2xl font-bold mb-4">No Decks Found</h2>
+            <p className="text-xl mb-6">Create your first deck to get started!</p>
+            <Link href="/vocabulary/create">
+              <Button variant="outline" className="gap-2">
+                <Plus className="h-4 w-4" />
+                Create Deck
+              </Button>
+            </Link>
+          </div>
+        ) : (
+          <div className="space-y-6">
+            <div className="flex justify-between items-center">
+              <h2 className="text-2xl font-bold text-white">Your Decks</h2>
+              <Link href="/vocabulary/create">
+                <Button className="gap-2">
+                  <Plus className="h-4 w-4" />
+                  Create New Deck
+                </Button>
+              </Link>
+            </div>
+            
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto">
+              {decks.map((deck) => (
+              <Link key={deck.id} href={`/vocabulary/decks/${deck.id}`}>
+                <div className="bg-white/10 backdrop-blur-md rounded-xl p-6 hover:bg-white/20 transition-all duration-200 cursor-pointer border border-white/20">
+                  <div className="flex justify-between items-start mb-4">
+                    <h3 className="text-xl font-semibold text-white">{deck.title}</h3>
+                    <ChevronRight className="h-5 w-5 text-white/70" />
+                  </div>
+                  
+                  <p className="text-white/80 mb-4 line-clamp-2">
+                    {deck.description || 'No description available'}
+                  </p>
+                  
+                  <div className="flex justify-between items-center text-sm text-white/70">
+                    <span className="px-2 py-1 bg-white/20 rounded-full">
+                      {deck.difficulty || 'Beginner'}
+                    </span>
+                    <span>
+                      {/* We'll show card count when we have the relationship working */}
+                      Study Now →
+                    </span>
+                  </div>
+                </div>
+              </Link>
+            ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   )
@@ -139,4 +149,4 @@ export default function Page() {
       <VocabularyPage />
     </Authenticator>
   );
-}
+} 

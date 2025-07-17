@@ -1,3 +1,14 @@
+export interface Deck {
+  id: string
+  title: string
+  description: string
+  flashcards: Flashcard[]
+  tags?: string[]
+  difficulty?: 'beginner' | 'intermediate' | 'advanced'
+  createdAt: Date
+  updatedAt: Date
+}
+
 export interface Flashcard {
   id: number
   keyword: string

@@ -37,6 +37,31 @@ const schema = a.schema({
     })
   )
   .authorization((allow) => allow.authenticated()),
+
+  // Flashcards
+  Deck: a.model({
+    id: a.id(),
+    title: a.string().required(),
+    description: a.string(),
+    difficulty: a.enum(['beginner', 'intermediate', 'advanced']),
+    createdAt: a.datetime(),
+    updatedAt: a.datetime(),
+    flashcards: a.hasMany('Flashcard', 'deckId')
+  })
+  .authorization((allow) => allow.owner()),
+
+  Flashcard: a.model({
+    id: a.id(),
+    keyword: a.string().required(),
+    definition: a.string().required(),
+    pronunciation: a.string(),
+    category: a.string(),
+    createdAt: a.datetime(),
+    updatedAt: a.datetime(),
+    deckId: a.id(),
+    deck: a.belongsTo('Deck', 'deckId')
+  })
+  .authorization((allow) => allow.owner()),
 });
 
 export type Schema = ClientSchema<typeof schema>;
@@ -44,7 +69,7 @@ export type Schema = ClientSchema<typeof schema>;
 export const data = defineData({
   schema,
   authorizationModes: {
-    defaultAuthorizationMode: 'identityPool',
+    defaultAuthorizationMode: 'userPool',
   },
 });
 

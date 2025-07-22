@@ -85,7 +85,12 @@ export function DeckForm({ mode, initialData, onSubmit, onCancel, disabled }: De
         <select
           id="difficulty"
           value={formData.difficulty}
-          onChange={(e) => setFormData(prev => ({ ...prev, difficulty: e.target.value as any }))}
+          onChange={(e) =>
+            setFormData(prev => ({
+              ...prev,
+              difficulty: e.target.value as "beginner" | "intermediate" | "advanced"
+            }))
+          }
           className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           disabled={disabled}
         >

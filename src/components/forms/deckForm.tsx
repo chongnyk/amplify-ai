@@ -6,7 +6,7 @@ type DeckData = Schema["Deck"]["createType"]
 
 interface DeckFormProps {
     mode: 'create' | 'edit'
-    initialData?: any
+    initialData?: DeckData
     onSubmit: (data: DeckData) => void
     onCancel: () => void
     disabled?: boolean

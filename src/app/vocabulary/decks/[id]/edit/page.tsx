@@ -10,13 +10,16 @@ import { Button } from "@/components/ui/button"
 import { ChevronLeft } from "lucide-react"
 import Link from "next/link"
 import { ThemeToggle } from "@/components/theme/themeToggle"
+import type { Schema } from "../../../../../../amplify/data/resource"
+
+type DeckData = Schema["Deck"]["createType"]
 
 function EditDeckPage() {
   const params = useParams()
   const router = useRouter()
   const deckId = params.id as string
   
-  const [deck, setDeck] = useState<any>(null)
+  const [deck, setDeck] = useState<DeckData | null>(null)
   const [loading, setLoading] = useState(true)
   const [updating, setUpdating] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -46,7 +49,7 @@ function EditDeckPage() {
     loadDeck()
   }, [deckId])
 
-  const handleDeckUpdate = async (deckData: any) => {
+  const handleDeckUpdate = async (deckData: DeckData) => {
     setUpdating(true)
     setError(null)
     setSuccess(null)
@@ -150,7 +153,7 @@ function EditDeckPage() {
               <h2 className="text-xl font-semibold mb-4 text-gray-800">Deck Information</h2>
               <DeckForm
                 mode="edit"
-                initialData={deck}
+                initialData={deck ?? undefined}
                 onSubmit={handleDeckUpdate}
                 onCancel={handleCancel}
                 disabled={updating}

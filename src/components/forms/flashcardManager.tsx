@@ -2,6 +2,9 @@ import { client } from "@/client"
 import { useEffect, useState } from "react"
 import { FlashcardForm } from "./FlashcardForm"
 import { Button } from "../ui/button"
+import type { Schema } from "../../../amplify/data/resource"
+
+type FlashcardData = Schema["Flashcard"]["createType"]
 
 // components/forms/FlashcardManager.tsx
 interface FlashcardManagerProps {
@@ -11,10 +14,10 @@ interface FlashcardManagerProps {
   
   export function FlashcardManager({ deckId, onFlashcardChange }: FlashcardManagerProps) {
     // State for flashcards list
-    const [flashcards, setFlashcards] = useState<any[]>([])
+    const [flashcards, setFlashcards] = useState<FlashcardData[]>([])
     const [loading, setLoading] = useState(true)
     const [showAddForm, setShowAddForm] = useState(false)
-    const [editingFlashcard, setEditingFlashcard] = useState<any>(null)
+    const [editingFlashcard, setEditingFlashcard] = useState<FlashcardData | null>(null)
   
     // Load flashcards for this deck
     useEffect(() => {
@@ -43,8 +46,12 @@ interface FlashcardManagerProps {
     }
   
     // Edit existing flashcard
-    const handleEdit = (flashcard: any) => {
+    const handleEdit = (flashcard: FlashcardData) => {
       setEditingFlashcard(flashcard)
+    }
+
+    if (loading) {
+      return <div>Loading flashcards...</div>
     }
   
     return (
@@ -73,21 +80,26 @@ interface FlashcardManagerProps {
                 <Button variant="outline" size="sm" onClick={() => handleEdit(flashcard)}>
                   Edit
                 </Button>
-                <Button variant="destructive" size="sm" onClick={() => handleDelete(flashcard.id)}>
-                  Delete
-                </Button>
+                {flashcard.id && (
+                  <Button
+                    variant="destructive"
+                    size="sm"
+                    onClick={() => handleDelete(flashcard.id as string)}
+                  >
+                    Delete
+                  </Button>
+                )}
               </div>
             </div>
           ))}
         </div>
   
         {/* Add/Edit Form Modal */}
-        {console.log('Modal render check:', { showAddForm, editingFlashcard })}
         {(showAddForm || editingFlashcard) && (
           <FlashcardForm
             mode={editingFlashcard ? 'edit' : 'create'}
             deckId={deckId}
-            initialData={editingFlashcard}
+            initialData={editingFlashcard ?? undefined}
             onSubmit={async (data) => {
               if (editingFlashcard) {
                 await client.models.Flashcard.update({

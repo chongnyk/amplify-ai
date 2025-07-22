@@ -2,7 +2,7 @@
 'use client'
 import { Authenticator } from "@aws-amplify/ui-react";
 import Link from 'next/link';
-import { ThemeToggle } from "@/components/theme/themeToggle";
+//import { ThemeToggle } from "@/components/theme/themeToggle";
 //import { useState } from 'react';
 
 // Feature cards data

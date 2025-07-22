@@ -10,7 +10,7 @@ type FlashcardCreateData = Schema["Flashcard"]["createType"]
 interface FlashcardFormProps {
     mode: 'create' | 'edit'
     deckId: string
-    initialData?: any
+    initialData?: FlashcardCreateData
     onSubmit: (data: FlashcardCreateData) => void
     onCancel: () => void
   }

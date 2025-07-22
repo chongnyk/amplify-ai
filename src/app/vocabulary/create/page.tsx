@@ -9,13 +9,14 @@ import { Button } from "@/components/ui/button"
 import { ChevronLeft } from "lucide-react"
 import Link from "next/link"
 import { ThemeToggle } from "@/components/theme/themeToggle"
+import type { Schema } from "../../../../amplify/data/resource"
 
 function CreateDeckPage() {
   const router = useRouter()
   const [creating, setCreating] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  const handleSubmit = async (deckData: any) => {
+  const handleSubmit = async (deckData: Schema["Deck"]["createType"]) => {
     setCreating(true)
     setError(null)
     

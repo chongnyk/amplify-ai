@@ -16,6 +16,11 @@ import { useKeyboardNavigation } from "@/hooks/useKeyboardNav"
 import { useSwipe } from "@/hooks/useSwipe"
 // vocabulary/decks/[id]/page.tsx
 import { useParams } from 'next/navigation'
+import type { Schema } from "../../../../../amplify/data/resource"
+
+type DeckData = Schema["Deck"]["createType"]
+type FlashcardData = Schema["Flashcard"]["createType"]
+
 // Amplify should be configured in client.ts - removing duplicate config
 
 function DeckPage() {
@@ -24,9 +29,9 @@ function DeckPage() {
   
   // Your existing state
   const [currentIndex, setCurrentIndex] = useState(0)
-  const [cards, setCards] = useState<any[]>([]) // Start with empty array
+  const [cards, setCards] = useState<FlashcardData[]>([]) // Start with empty array
   const [loading, setLoading] = useState(true)
-  const [deck, setDeck] = useState<any>(null)
+  const [deck, setDeck] = useState<DeckData | null>(null)
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
@@ -177,7 +182,19 @@ function DeckPage() {
         <ProgressBar current={currentIndex + 1} total={cards.length} />
 
         <div className="mb-8">
-          <FlashcardCarousel flashcards={cards} currentIndex={currentIndex} onIndexChange={setCurrentIndex} />
+          <FlashcardCarousel
+            flashcards={cards
+              .filter(card => card.id !== undefined && card.id !== null && !isNaN(Number(card.id)))
+              .map(card => ({
+                ...card,
+                id: Number(card.id),
+                pronunciation: card.pronunciation ?? undefined,
+                category: card.category ?? undefined,
+                // add similar lines for any other nullable fields expected as string | undefined
+              }))}
+            currentIndex={currentIndex}
+            onIndexChange={setCurrentIndex}
+          />
         </div>
 
         {/* Navigation Controls */}

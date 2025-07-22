@@ -8,10 +8,14 @@ import { ChevronRight, Plus, MoreVertical } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { ThemeToggle } from "@/components/theme/themeToggle"
 import { useRouter } from "next/navigation";
+import type { Schema } from "../../../amplify/data/resource"
+
+type DeckData = Schema["Deck"]["createType"]
+
 // Amplify should be configured in client.ts - removing duplicate config
 
 function VocabularyPage() {
-  const [decks, setDecks] = useState<any[]>([])
+  const [decks, setDecks] = useState<DeckData[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const router = useRouter();

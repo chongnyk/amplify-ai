@@ -2,6 +2,7 @@ import { client } from "@/client"
 import { useEffect, useState } from "react"
 import { FlashcardForm } from "./FlashcardForm"
 import { Button } from "../ui/button"
+import { Modal } from "../ui/modal"
 import type { Schema } from "../../../amplify/data/resource"
 
 type FlashcardData = Schema["Flashcard"]["createType"]
@@ -95,7 +96,7 @@ interface FlashcardManagerProps {
         </div>
   
         {/* Add/Edit Form Modal */}
-        {(showAddForm || editingFlashcard) && (
+        <Modal open={showAddForm || !!editingFlashcard} onClose={() => { setShowAddForm(false); setEditingFlashcard(null); }}>
           <FlashcardForm
             mode={editingFlashcard ? 'edit' : 'create'}
             deckId={deckId}
@@ -123,7 +124,7 @@ interface FlashcardManagerProps {
               setEditingFlashcard(null)
             }}
           />
-        )}
+        </Modal>
       </div>
     )
   }

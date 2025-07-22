@@ -44,7 +44,9 @@ function CreateDeckPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#1e40af] to-[#60a5fa] dark:from-[#581c87] dark:to-[#7c3aed]">
+    <div className="min-h-screen" style={{
+      background: "#1F2937",
+    }}>
       <div className="absolute top-4 right-4">
         <ThemeToggle />
       </div>
@@ -71,7 +73,7 @@ function CreateDeckPage() {
             </div>
           )}
 
-          <div className="bg-white rounded-lg shadow-lg p-6">
+          <div className="bg-white rounded-lg shadow-lg p-6" style={{margin: "0 2rem"}}>
             <DeckForm
               mode="create"
               onSubmit={handleSubmit}

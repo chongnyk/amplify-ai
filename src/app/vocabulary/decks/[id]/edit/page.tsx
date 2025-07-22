@@ -147,7 +147,7 @@ function EditDeckPage() {
             </div>
           )}
 
-          <div className="space-y-8">
+          <div className="space-y-8" style={{margin: "0 2rem"}}>
             {/* Deck Information Form */}
             <div className="bg-white rounded-lg shadow-lg p-6">
               <h2 className="text-xl font-semibold mb-4 text-gray-800">Deck Information</h2>

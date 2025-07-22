@@ -9,7 +9,7 @@ import Link from 'next/link';
 const features = [
   {
     id: 'chat',
-    title: 'AI Japanese Tutor',
+    title: 'AI Chatbot Tutor',
     description: 'Practice Japanese with AI-powered conversations, grammar exercises, and reading comprehension.',
     icon: '🎌',
     href: '/chat',

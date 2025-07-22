@@ -184,7 +184,7 @@ function DeckPage() {
         <div className="mb-8">
           <FlashcardCarousel
             flashcards={cards
-              .filter(card => card.id !== undefined && card.id !== null && !isNaN(Number(card.id)))
+              .filter(card => card && card.id !== undefined && card.id !== null)
               .map(card => ({
                 ...card,
                 id: Number(card.id),

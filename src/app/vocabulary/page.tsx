@@ -4,15 +4,17 @@ import { useState, useEffect } from "react"
 import { Authenticator } from "@aws-amplify/ui-react";
 import { client } from "@/client";
 import Link from 'next/link';
-import { ChevronRight, Plus } from "lucide-react"
+import { ChevronRight, Plus, MoreVertical } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { ThemeToggle } from "@/components/theme/themeToggle"
+import { useRouter } from "next/navigation";
 // Amplify should be configured in client.ts - removing duplicate config
 
 function VocabularyPage() {
   const [decks, setDecks] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const router = useRouter();
 
   useEffect(() => {
     const loadDecks = async () => {
@@ -40,7 +42,7 @@ function VocabularyPage() {
   // Loading state
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br flex items-center justify-center" style={{
+      <div className="min-h-screen flex items-center justify-center" style={{
         background: "#1F2937",
       }}>
         <div className="text-white text-xl">Loading decks...</div>
@@ -51,7 +53,7 @@ function VocabularyPage() {
   // Error state
   if (error) {
     return (
-      <div className="min-h-screen bg-gradient-to-br flex items-center justify-center" style={{
+      <div className="min-h-screen flex items-center justify-center" style={{
         background: "#1F2937",
       }}>
         <div className="text-center text-white">
@@ -66,7 +68,7 @@ function VocabularyPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br" style={{
+    <div className="min-h-screen" style={{
       background: "#1F2937",
     }}>
       <div className="absolute top-4 right-4">
@@ -110,12 +112,19 @@ function VocabularyPage() {
               </Link>
             </div>
             
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 mx-auto" style={{ gap: '24px', maxWidth: '700px', width: '90%' }}>
               {decks.map((deck) => (
               <Link key={deck.id} href={`/vocabulary/decks/${deck.id}`}>
-                <div className="bg-white/10 backdrop-blur-md rounded-xl p-6 hover:bg-white/20 transition-all duration-200 cursor-pointer border border-white/20">
+                <div className="bg-white/10 backdrop-blur-md rounded-xl hover:bg-white/20 transition-all duration-200 cursor-pointer border border-white/20" style={{ padding: '24px' }}>
                   <div className="flex justify-between items-start mb-4">
                     <h3 className="text-xl font-semibold text-white">{deck.title}</h3>
+                    <button onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      router.push(`/vocabulary/decks/${deck.id}/edit`);
+                    }}>
+                      <MoreVertical className="h-5 w-5 text-white/70"/>
+                    </button>
                     <ChevronRight className="h-5 w-5 text-white/70" />
                   </div>
                   

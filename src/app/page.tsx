@@ -83,14 +83,16 @@ function HomePage() {
   // console.log('Current user:', user);
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen" style={{
+      background: "#1F2937",
+    }}>
       {/* Header */}
       <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
         <div className="max-w-6xl mx-auto px-4 py-4">
           <div className="flex justify-between items-center">
             <div className="flex items-center space-x-3">
-              <span className="text-2xl">🎌</span>
-              <h1 className="text-xl font-bold text-gray-800">Japanese Learning Hub</h1>
+              <span className="text-2xl">�</span>
+              <h1 className="text-xl font-bold text-gray-800">Language Learning Hub</h1>
             </div>
             <div className="flex items-center space-x-6">
               <nav className="hidden md:flex items-center space-x-6">
@@ -107,7 +109,7 @@ function HomePage() {
                   Reading
                 </Link>
               </nav>
-              <ThemeToggle />
+              {/* <ThemeToggle /> */}
             </div>
           </div>
         </div>
@@ -117,10 +119,10 @@ function HomePage() {
       <section className="bg-gradient-to-br from-blue-50 to-indigo-100 py-16">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h2 className="text-4xl font-bold text-gray-900 mb-4">
-            Master Japanese with AI-Powered Learning
+            Master a language with AI-Powered Learning
           </h2>
           <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-            Enhance your Japanese language skills with personalized AI tutoring, 
+            Enhance your language learning journey with personalized AI tutoring, 
             interactive exercises, and comprehensive learning tools.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -130,9 +132,9 @@ function HomePage() {
             >
               Start Learning Now
             </Link>
-            <button className="bg-white hover:bg-gray-50 text-gray-700 px-8 py-3 rounded-lg font-medium border border-gray-300 transition-colors">
+            {/* <button className="bg-white hover:bg-gray-50 text-gray-700 px-8 py-3 rounded-lg font-medium border border-gray-300 transition-colors">
               Learn More
-            </button>
+            </button> */}
           </div>
         </div>
       </section>
@@ -148,7 +150,7 @@ function HomePage() {
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2" style={{ gap: '24px', maxWidth: '700px', width: '90%', margin: '0 auto'}}>
             {features.map((feature) => (
               <FeatureCard key={feature.id} feature={feature} />
             ))}
@@ -181,7 +183,7 @@ function HomePage() {
         <div className="max-w-6xl mx-auto px-4">
           <div className="text-center">
             <p className="text-gray-400">
-              © 2025 Japanese Learning Hub. Powered by AI technology.
+              © 2025 Language Learning Hub. Powered by AI technology.
             </p>
           </div>
         </div>

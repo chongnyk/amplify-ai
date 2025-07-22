@@ -84,7 +84,9 @@ function EditDeckPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-[#1e40af] to-[#60a5fa] dark:from-[#581c87] dark:to-[#7c3aed] flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center" style={{
+        background: "#1F2937",
+      }}>
         <div className="text-white text-xl">Loading deck...</div>
       </div>
     )
@@ -92,7 +94,9 @@ function EditDeckPage() {
 
   if (error && !deck) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-[#1e40af] to-[#60a5fa] dark:from-[#581c87] dark:to-[#7c3aed] flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center" style={{
+        background: "#1F2937",
+      }}>
         <div className="text-center text-white">
           <h2 className="text-2xl font-bold mb-4">Error</h2>
           <p className="text-xl mb-4">{error}</p>
@@ -105,7 +109,9 @@ function EditDeckPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#1e40af] to-[#60a5fa] dark:from-[#581c87] dark:to-[#7c3aed]">
+    <div className="min-h-screen" style={{
+      background: "#1F2937",
+    }}>
       <div className="absolute top-4 right-4">
         <ThemeToggle />
       </div>
